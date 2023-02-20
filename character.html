@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Character</title>
+    <style>
+      #game-board {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        position: relative;
+      }
+      #character {
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Character</h1>
+    <div id="game-board">
+      <div id="character"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // Connect to the server
+      const socket = io();
+
+      // Move the character when a message is received from the server
+      const character = document.getElementById("character");
+      let xPos = 0;
+      let yPos = 0;
+      character.style.top = `${yPos}px`;
+      character.style.left = `${xPos}px`;
+      socket.on("move", (direction) => {
+        if (direction === "up") {
+          console.log(direction);
+          yPos -= 10;
+        } else if (direction === "down") {
+          console.log(direction);
+          yPos += 10;
+        } else if (direction === "left") {
+          console.log(direction);
+          xPos -= 10;
+        } else if (direction === "right") {
+          console.log(direction);
+          xPos += 10;
+        }
+        character.style.top = `${yPos}px`;
+        character.style.left = `${xPos}px`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Controller</title>
+  </head>
+  <body>
+    <h1>Controller</h1>
+    <p>Use the arrow keys to move the character.</p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // Connect to the server
+      const socket = io();
+
+      // Send a message to the server when an arrow key is pressed
+      document.addEventListener('keydown', event => {
+        if (event.code === 'ArrowUp') {
+          socket.emit('move', 'up');
+        } else if (event.code === 'ArrowDown') {
+          socket.emit('move', 'down');
+        } else if (event.code === 'ArrowLeft') {
+          socket.emit('move', 'left');
+        } else if (event.code === 'ArrowRight') {
+          socket.emit('move', 'right');
+        }
+      });
+    </script>
+  </body>
+</html>
