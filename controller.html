@@ -3,14 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <title>Controller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
+  <body style="font-family: 'Press Start 2P', cursive;">
     <h1>Controller</h1>
     <p>Use the arrow keys to move the character.</p>
+    <p>Or use the on-screen controls:</p>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+      "
+    >
+      <input value="up" type="button" onclick="setDirection('up');" />
+      <div style="display: flex; flex-direction: row">
+        <input value="left" type="button" onclick="setDirection('left');" />
+        <input value="right" type="button" onclick="setDirection('right');" />
+      </div>
+      <input value="down" type="button" onclick="setDirection('down');" />
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       // Connect to the server
       const socket = io();
+
+      // On-screen controls that send a message to the server
+      const setDirection = (direction) => {
+        if (direction === "up") {
+          socket.emit("move", "up");
+        } else if (direction === "down") {
+          socket.emit("move", "down");
+        } else if (direction === "left") {
+          socket.emit("move", "left");
+        } else if (direction === "right") {
+          socket.emit("move", "right");
+        }
+      };
 
       // Send a message to the server when an arrow key is pressed
       document.addEventListener("keydown", (event) => {

@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>Character</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <style>
       #game-board {
         width: 90%;
@@ -17,6 +23,9 @@
         position: absolute;
         top: 0;
         left: 0;
+      }
+      body {
+        font-family: 'Press Start 2P', cursive;
       }
     </style>
   </head>
@@ -85,7 +94,7 @@
       character.style.top = `${yPos}px`;
       character.style.left = `${xPos}px`;
       socket.on("move", (direction) => {
-        console.log(direction);
+        // console.log(direction);
         if (direction === "up") {
           console.log(direction);
           yPos -= 15;
