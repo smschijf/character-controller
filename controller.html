@@ -9,23 +9,96 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .controller-text {
+        display: flex;
+        justify-content: center;
+        font-size: 0.8rem;
+        margin-top: 5rem;
+      }
+      .switch {
+        display: flex;
+        justify-content: center;
+      }
+      .slider {
+        background-color: #ffffff2b;
+        border-radius: 100px;
+        padding: 1px;
+        margin: 10px;
+        cursor: pointer;
+        transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+        align-items: center;
+        position: relative;
+        display: inline-block;
+        width: 51px;
+        height: 29px;
+        box-shadow: rgba(0, 0, 0, 0.62) 0px 0px 5px inset,
+          rgba(0, 0, 0, 0.21) 0px 0px 0px 24px inset,
+          #22cc3f 0px 0px 0px 0px inset,
+          rgba(224, 224, 224, 0.45) 0px 1px 0px 0px;
+      }
+      .slider::after {
+        content: "";
+        display: flex;
+        top: 2.3px;
+        left: 2px;
+        width: 26px;
+        height: 26px;
+        background-color: #e3e3e3;
+        border-radius: 200px;
+        position: absolute;
+        box-shadow: transparent 0px 0px 0px 2px, rgba(0, 0, 0, 0.3) 0px 6px 6px;
+        transition: left 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
+          background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+        will-change: left, background-color;
+      }
+      .switch input[type="checkbox"]:checked + .slider {
+        box-shadow: rgba(0, 0, 0, 0.62) 0px 0px 5px inset,
+          #22cc3f 0px 0px 0px 2px inset, #22cc3f 0px 0px 0px 24px inset,
+          rgba(224, 224, 224, 0.45) 0px 1px 0px 0px;
+      }
+      .switch input[type="checkbox"]:checked + .slider::after {
+        left: 24px;
+      }
+      .switch input[type="checkbox"] {
+        display: none;
+      }
+      input[type="button"] {
+        width: 50%;
+        height: 2rem;
+      }
+    </style>
   </head>
-  <body style="font-family: 'Press Start 2P', cursive;">
+  <body style="font-family: 'Press Start 2P', cursive">
     <h1>Controller</h1>
     <p>Use the arrow keys to move the character.</p>
     <p>Or use the on-screen controls:</p>
+    <p class="controller-text">Turn the controller on or off</p>
+    <label class="switch">
+      <input type="checkbox" id="checkbox" />
+      <span class="slider"></span>
+    </label>
     <div
       style="
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 100%;
+        width: 8rem;
+        height: 8rem;
         flex-direction: column;
+        row-gap: 1rem;
+        margin: 0 auto;
       "
     >
       <input value="up" type="button" onclick="setDirection('up');" />
-      <div style="display: flex; flex-direction: row">
+      <div
+        style="
+          display: flex;
+          width: 100%;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
         <input value="left" type="button" onclick="setDirection('left');" />
         <input value="right" type="button" onclick="setDirection('right');" />
       </div>
@@ -33,32 +106,37 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      const checkbox = document.getElementById("checkbox");
       // Connect to the server
       const socket = io();
 
       // On-screen controls that send a message to the server
       const setDirection = (direction) => {
-        if (direction === "up") {
-          socket.emit("move", "up");
-        } else if (direction === "down") {
-          socket.emit("move", "down");
-        } else if (direction === "left") {
-          socket.emit("move", "left");
-        } else if (direction === "right") {
-          socket.emit("move", "right");
+        if (checkbox.checked) {
+          if (direction === "up") {
+            socket.emit("move", "up");
+          } else if (direction === "down") {
+            socket.emit("move", "down");
+          } else if (direction === "left") {
+            socket.emit("move", "left");
+          } else if (direction === "right") {
+            socket.emit("move", "right");
+          }
         }
       };
 
       // Send a message to the server when an arrow key is pressed
       document.addEventListener("keydown", (event) => {
-        if (event.code === "ArrowUp") {
-          socket.emit("move", "up");
-        } else if (event.code === "ArrowDown") {
-          socket.emit("move", "down");
-        } else if (event.code === "ArrowLeft") {
-          socket.emit("move", "left");
-        } else if (event.code === "ArrowRight") {
-          socket.emit("move", "right");
+        if (checkbox.checked) {
+          if (event.code === "ArrowUp") {
+            socket.emit("move", "up");
+          } else if (event.code === "ArrowDown") {
+            socket.emit("move", "down");
+          } else if (event.code === "ArrowLeft") {
+            socket.emit("move", "left");
+          } else if (event.code === "ArrowRight") {
+            socket.emit("move", "right");
+          }
         }
       });
     </script>

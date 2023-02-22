@@ -25,7 +25,7 @@
         left: 0;
       }
       body {
-        font-family: 'Press Start 2P', cursive;
+        font-family: "Press Start 2P", cursive;
       }
     </style>
   </head>
@@ -94,7 +94,6 @@
       character.style.top = `${yPos}px`;
       character.style.left = `${xPos}px`;
       socket.on("move", (direction) => {
-        // console.log(direction);
         if (direction === "up") {
           console.log(direction);
           yPos -= 15;
