@@ -114,12 +114,16 @@
       const setDirection = (direction) => {
         if (checkbox.checked) {
           if (direction === "up") {
+            onclickAudio.play();
             socket.emit("move", "up");
           } else if (direction === "down") {
+            onclickAudio.play();
             socket.emit("move", "down");
           } else if (direction === "left") {
+            onclickAudio.play();
             socket.emit("move", "left");
           } else if (direction === "right") {
+            onclickAudio.play();
             socket.emit("move", "right");
           }
         }
